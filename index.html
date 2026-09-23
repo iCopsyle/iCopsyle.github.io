@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="is-intro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Omar Alabdan · Game Designer & Indie Developer</title>
+<meta name="description" content="Omar Alabdan (iCopsyle), game designer and indie developer. Featured games HourZero, Insert Game Name Here and Ticking Grains, plus every project on itch.io.">
+<meta name="theme-color" content="#0a0f17">
+<meta property="og:title" content="Omar Alabdan · Game Designer & Indie Developer">
+<meta property="og:image" content="assets/img/reel-hourzero.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%F0%9F%8E%AE%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="assets/img/reel-hourzero.jpg" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400;500&family=Readex+Pro:wght@300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<script>
+  // Language before first paint: saved choice, else the browser's language.
+  (function () {
+    var l = null;
+    try { l = localStorage.getItem("lang"); } catch (e) {}
+    if (!l) l = (navigator.language || "").toLowerCase().indexOf("ar") === 0 ? "ar" : "en";
+    document.documentElement.lang = l;
+    document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+    try { if (sessionStorage.getItem("seen")) document.documentElement.classList.remove("is-intro"); } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+<!--
+THESIS: The category-standard game-dev portfolio (showreel hero, featured work, project index, contact), chosen by the user from four prototypes and executed at full fidelity: the work leads from the first frame, every section moves.
+OWN-WORLD: night-sky dark (#0a0f17 / #111a26) with calm sky blue (#8ecdf7) as the only accent; faint night clouds drift behind the whole page; the close is a cloud-filled night sky. Geist + Geist Mono for Latin, Readex Pro for Arabic; full RTL mirror.
+STORY: see Omar's games playing behind his name, compare three featured 2026 games in an expanding character-select row (hover scrubs screenshots), scan every other project, read who he is and a few facts, email him under drifting clouds.
+FIRST VIEWPORT: full-bleed WebGL reel of the featured games with a noise-dissolve transition; name at display size bottom-start, role, one line, "See featured games" primary; the current game's name and a Play button at bottom-end, no card.
+FORM: the category standard (canon exit), seed d8788521.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+-->
+<a class="skip" href="#featured" data-i18n="skip">Skip to content</a>
+
+<canvas class="sky" id="sky" aria-hidden="true"></canvas>
+<div class="wipe" id="wipe" aria-hidden="true"></div>
+
+<!-- ============================== NAV ============================== -->
+<header class="nav" id="nav">
+  <a class="brand" href="#top" data-scroll-to aria-label="Omar Alabdan">
+    <span class="brand-emoji" aria-hidden="true">🎮</span>
+    <span class="brand-name" data-i18n="hero.name">Omar Alabdan</span>
+  </a>
+  <nav class="nav-links" aria-label="Sections">
+    <span class="nav-pill" id="navPill" aria-hidden="true"></span>
+    <a href="#featured" data-scroll-to data-i18n="nav.work">Featured</a>
+    <a href="#projects" data-scroll-to data-i18n="nav.projects">Projects</a>
+    <a href="#about" data-scroll-to data-i18n="nav.about">About</a>
+    <a href="#contact" data-scroll-to data-i18n="nav.contact">Contact</a>
+  </nav>
+  <button class="lang" type="button" id="langBtn" data-i18n="nav.lang" data-i18n-aria="nav.langLabel" aria-label="Switch to Arabic">العربية</button>
+</header>
+
+<main>
+<!-- ============================== HERO ============================= -->
+<section class="hero" id="top">
+  <div class="reel" id="reel">
+    <div class="reel-frames" id="reelFrames">
+      <img src="assets/img/reel-hourzero.jpg" alt="" width="1920" height="1080" fetchpriority="high" decoding="async" class="is-on">
+      <img src="assets/img/reel-insert-game-name-here.jpg" alt="" width="1920" height="1080" decoding="async">
+      <img src="assets/img/reel-ticking-grains.jpg" alt="" width="1920" height="1080" decoding="async">
+    </div>
+    <canvas id="reelGL" aria-hidden="true"></canvas>
+    <div class="reel-shade"></div>
+  </div>
+
+  <div class="hero-copy">
+    <p class="role" data-i18n="hero.role">Game designer &amp; indie developer</p>
+    <h1 class="hero-name" data-split data-i18n="hero.name">Omar Alabdan</h1>
+    <p class="hero-line" data-i18n="hero.line">Six-plus years designing and building games. Mechanics first, polished until they feel right, and actually shipped.</p>
+    <div class="hero-cta">
+      <a class="btn btn-sky" href="#featured" data-scroll-to data-magnetic>
+        <span data-i18n="hero.cta">See featured games</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+      </a>
+      <a class="btn btn-line" href="#contact" data-scroll-to data-magnetic><span data-i18n="hero.cta2">Get in touch</span></a>
+    </div>
+  </div>
+
+  <div class="now" id="now">
+    <span class="now-title-wrap"><span class="now-title" id="nowTitle">HourZero</span></span>
+    <a class="now-play" id="nowPlay" href="https://icopsyle.itch.io/hourzero" target="_blank" rel="noopener">
+      <span data-i18n="hero.play">Play</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+    </a>
+  </div>
+
+  <a class="scroll-cue" href="#featured" data-scroll-to aria-hidden="true" tabindex="-1"><span data-i18n="hero.scroll">Scroll</span><i></i></a>
+</section>
+
+<!-- ============================ FEATURED =========================== -->
+<section class="featured" id="featured">
+  <header class="sec-head wrap">
+    <h2 data-split data-i18n="feat.title">Three games from 2026</h2>
+    <p data-i18n="feat.sub">My most recent games, all playable in your browser.</p>
+  </header>
+  <div class="select" id="select"></div>
+</section>
+
+<!-- ============================ PROJECTS =========================== -->
+<section class="projects" id="projects">
+  <div class="wrap">
+    <header class="proj-head">
+      <div>
+        <h2 data-split data-i18n="proj.title">All projects</h2>
+        <p data-i18n="proj.sub">Everything else I've made, from 2020 to now. Every one is playable on itch.io.</p>
+      </div>
+      <p class="proj-count"><b id="cAll"></b> <span data-i18n="proj.count">games</span></p>
+    </header>
+    <ul class="proj-list" id="projList"></ul>
+  </div>
+  <div class="proj-preview" id="projPreview" aria-hidden="true"><div class="pp-inner" id="ppInner"></div></div>
+</section>
+
+<!-- ============================= ABOUT ============================= -->
+<section class="about" id="about">
+  <div class="wrap">
+    <h2 class="about-title" data-split data-i18n="about.title">About</h2>
+    <p class="statement" id="statement" data-i18n="about.statement">I'm Omar, a game designer and indie developer. I care about three things: mechanics that feel good in your hands, polish that makes a small game feel finished, and actually shipping it.</p>
+    <div class="about-grid">
+      <div class="about-copy">
+        <p data-i18n="about.p1"></p>
+        <p data-i18n="about.p2"></p>
+      </div>
+      <dl class="facts">
+        <div><dt data-i18n="about.facts.years">Experience</dt><dd data-i18n="about.facts.yearsV">6+ years</dd></div>
+        <div><dt data-i18n="about.facts.games">Released</dt><dd data-i18n="about.facts.gamesV">14 games on itch.io</dd></div>
+        <div><dt data-i18n="about.facts.engine">Works in</dt><dd data-i18n="about.facts.engineV">2D &amp; 3D</dd></div>
+        <div><dt data-i18n="about.facts.handle">Handle</dt><dd data-i18n="about.facts.handleV">iCopsyle</dd></div>
+      </dl>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================ CONTACT ============================ -->
+<section class="contact" id="contact">
+  <canvas class="clouds" id="clouds" aria-hidden="true"></canvas>
+  <div class="wrap contact-inner">
+    <h2 class="contact-title" data-split data-i18n="contact.title">Let's make something worth playing.</h2>
+    <p class="contact-sub" data-i18n="contact.sub">Studios, teams, collaborators: my inbox is open.</p>
+    <div class="mail-row">
+      <a class="mail" href="mailto:omar.abdan800@gmail.com" data-magnetic dir="ltr">omar.abdan800@gmail.com</a>
+      <button class="btn btn-line" type="button" id="copyMail" data-magnetic>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+        <span data-i18n="contact.copy">Copy email</span>
+      </button>
+    </div>
+    <ul class="links">
+      <li><a href="https://icopsyle.itch.io/" target="_blank" rel="noopener"><span>itch.io</span><em dir="ltr">icopsyle.itch.io</em><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+      <li><a href="https://twitter.com/iCopsyle" target="_blank" rel="noopener"><span>X / Twitter</span><em dir="ltr">@iCopsyle</em><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+    </ul>
+  </div>
+  <footer class="foot wrap">
+    <span data-i18n="foot.rights">© 2026 Omar Alabdan</span>
+    <span class="foot-time"><span data-i18n="foot.time">Your time</span> <b id="footTime" dir="ltr">--:--</b></span>
+    <a href="#top" data-scroll-to class="to-top"><span data-i18n="foot.top">Back to top</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></a>
+  </footer>
+</section>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+<script src="js/reel.js" defer></script>
+<script src="js/site.js" defer></script>
+</body>
+</html>
