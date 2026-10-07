@@ -1,72 +1,51 @@
-/* Every string on the page, in English and Arabic.
-   Game titles are brand names and stay in English in both. */
-window.I18N = {
+/* Every UI string in English and Arabic. Arabic is the default.
+   Arabic copy comes from Protofolio/V3/js/i18n.js; game titles stay in English in both. */
+
+export const STR = {
   en: {
-    "meta.title": "Omar Alabdan · Game Designer & Indie Developer",
-    "nav.work": "Featured", "nav.projects": "Projects", "nav.about": "About", "nav.contact": "Contact",
-    "nav.lang": "العربية", "nav.langLabel": "Switch to Arabic",
-    "hero.role": "Game designer & indie developer",
-    "hero.name": "Omar Alabdan",
-    "hero.line": "Six-plus years designing and building games. Mechanics first, polished until they feel right, and actually shipped.",
-    "hero.cta": "See featured games", "hero.cta2": "Get in touch",
-    "hero.play": "Play", "hero.scroll": "Scroll",
-    "feat.kicker": "Featured", "feat.title": "Three games from 2026",
-    "feat.sub": "My most recent games, all playable in your browser.",
-    "feat.scrub": "Slide across to flip screenshots", "feat.tap": "Tap to flip screenshots", "feat.controls": "How to play", "feat.playOn": "Play on itch.io",
-    "meta.year": "Year", "meta.genre": "Genre", "meta.platform": "Runs on", "meta.rating": "Rating",
-    "proj.title": "All projects", "proj.sub": "Everything else I've made, from 2020 to now. Every one is playable on itch.io.",
-    "proj.count": "games",
-    "proj.noArt": "No cover art yet",
-    "about.title": "About",
-    "about.statement": "I'm Omar, a game designer and indie developer. I care about three things: mechanics that feel good in your hands, polish that makes a small game feel finished, and actually shipping it.",
-    "about.p1": "I like small, focused games: find the one idea that's genuinely fun, build it fast, then spend the rest of the time making it feel right. A lot of mine end up being about time.",
-    "about.p2": "I've shipped fourteen games so far, from 2D pixel art to 3D first-person, and I pick the tools that fit the project. Every one of them is playable on itch.io.",
-    "about.facts.engine": "Works in", "about.facts.engineV": "2D & 3D",
-    "about.facts.games": "Released", "about.facts.gamesV": "14 games on itch.io",
-    "about.facts.years": "Experience", "about.facts.yearsV": "6+ years",
-    "about.facts.handle": "Handle", "about.facts.handleV": "iCopsyle",
-    "contact.title": "Let's make something worth playing.",
-    "contact.sub": "Studios, teams, collaborators: my inbox is open.",
-    "contact.copy": "Copy email", "contact.copied": "Copied",
-    "foot.rights": "© 2026 Omar Alabdan", "foot.top": "Back to top", "foot.time": "Your time",
-    "status.released": "Released", "status.dev": "In development",
-    "skip": "Skip to content"
+    "meta.title": "Omar Alabdan · Game Designer",
+    "name.a": "OMAR", "name.b": "ALABDAN", "name": "Omar Alabdan",
+    "loading": "// Loading the desert",
+    "role": "// Game designer & indie developer",
+    "sub": "iCopsyle.<br>Six-plus years. Fourteen games.",
+    "index": "////// Index", "nav.games": "Games", "nav.all": "All projects", "nav.contact": "Contact",
+    "manifesto": "I design small, focused games: find the one idea that's genuinely fun, build it fast, then spend the rest of the time making it feel right.",
+    "lang": "العربية", "lang.label": "Switch to Arabic",
+    "sound": "Sound:", "on": "On", "off": "Off",
+    "hint.power": "Scroll to power on", "hint.keep": "Keep scrolling", "hint.in": "Going in",
+    "hint.hz": "Scroll to walk the road", "hint.ignh": "Scroll down the corridor", "hint.shelf": "Scroll to turn the shelf",
+    "featured": "Featured", "howto": "How to play", "play": "Play on itch.io", "padhint": "or press <kbd>A</kbd> on the Game Boy",
+    "time": "TIME",
+    "every": "Every game", "drag": "Drag the shelf, or use <kbd>←</kbd> <kbd>→</kbd>",
+    "contact.kicker": "////// Contact", "contact.title": "Let's make something<br>worth playing.",
+    "contact.sub": "Studios, teams, collaborators: my inbox is open.", "copy": "Copy", "copied": "Copied",
+    "twitter": "X / Twitter", "foot": "© 2026 Omar Alabdan",
+    "narr.1": "Walk the corridor.", "narr.2": "Click on what you find.", "narr.3": "...Working on it."
   },
   ar: {
-    "meta.title": "عمر العبدان · مصمّم ومطوّر ألعاب مستقل",
-    "nav.work": "المختارة", "nav.projects": "المشاريع", "nav.about": "نبذة", "nav.contact": "تواصل",
-    "nav.lang": "English", "nav.langLabel": "التبديل إلى الإنجليزية",
-    "hero.role": "مصمّم ومطوّر ألعاب مستقل",
-    "hero.name": "عمر العبدان",
-    "hero.line": "أكثر من ست سنوات في تصميم الألعاب وبنائها. أبدأ بالميكانيكيات، وأصقلها حتى يصبح الإحساس بها صحيحًا، ثم أنشرها فعلًا.",
-    "hero.cta": "شاهد أبرز الألعاب", "hero.cta2": "تواصل معي",
-    "hero.play": "العب", "hero.scroll": "مرّر",
-    "feat.kicker": "مختارة", "feat.title": "ثلاث ألعاب من 2026",
-    "feat.sub": "أحدث ألعابي، وكلها تعمل في المتصفح.",
-    "feat.scrub": "حرّك المؤشر لتصفّح اللقطات", "feat.tap": "اضغط لتصفّح اللقطات", "feat.controls": "طريقة اللعب", "feat.playOn": "العب على itch.io",
-    "meta.year": "السنة", "meta.genre": "النوع", "meta.platform": "المنصّة", "meta.rating": "التقييم",
-    "proj.title": "كل المشاريع", "proj.sub": "بقية ما صنعته، من 2020 حتى اليوم. وكلها قابلة للعب على itch.io.",
-    "proj.count": "لعبة",
-    "proj.noArt": "لا يوجد غلاف بعد",
-    "about.title": "نبذة",
-    "about.statement": "أنا عمر، مصمّم ومطوّر ألعاب مستقل. يهمّني ثلاثة أشياء: ميكانيكيات ممتعة بين يديك، وصقلٌ يجعل اللعبة الصغيرة تبدو مكتملة، وأن تُنشر فعلًا.",
-    "about.p1": "أحب الألعاب الصغيرة المركّزة: أجد الفكرة الممتعة فعلًا، أبنيها بسرعة، ثم أقضي بقية الوقت في صقلها حتى يصبح الإحساس بها صحيحًا. كثير من ألعابي تدور حول الوقت.",
-    "about.p2": "نشرت حتى الآن أربع عشرة لعبة، من فن البكسل ثنائي الأبعاد إلى ألعاب المنظور الأول ثلاثية الأبعاد، وأختار الأدوات التي تناسب كل مشروع. وكلها قابلة للعب على itch.io.",
-    "about.facts.engine": "أعمل في", "about.facts.engineV": "2D و 3D",
-    "about.facts.games": "المنشورة", "about.facts.gamesV": "14 لعبة على itch.io",
-    "about.facts.years": "الخبرة", "about.facts.yearsV": "أكثر من 6 سنوات",
-    "about.facts.handle": "المعرّف", "about.facts.handleV": "iCopsyle",
-    "contact.title": "لنصنع شيئًا يستحق اللعب.",
-    "contact.sub": "استوديوهات، فرق تطوير، متعاونون: بريدي مفتوح دائمًا.",
-    "contact.copy": "انسخ البريد", "contact.copied": "تم النسخ",
-    "foot.rights": "© 2026 عمر العبدان", "foot.top": "للأعلى", "foot.time": "توقيتك",
-    "status.released": "منشورة", "status.dev": "قيد التطوير",
-    "skip": "تخطَّ إلى المحتوى"
+    "meta.title": "عمر العبدان · مصمّم ألعاب",
+    "name.a": "عمر", "name.b": "العبدان", "name": "عمر العبدان",
+    "loading": "// جارٍ تحميل الصحراء",
+    "role": "// مصمّم ومطوّر ألعاب مستقل",
+    "sub": "iCopsyle.<br>أكثر من ست سنوات. أربع عشرة لعبة.",
+    "index": "////// الفهرس", "nav.games": "الألعاب", "nav.all": "كل المشاريع", "nav.contact": "تواصل",
+    "manifesto": "أصمّم ألعابًا صغيرة ومركّزة: أجد الفكرة الممتعة فعلًا، أبنيها بسرعة، ثم أقضي بقية الوقت في صقلها حتى يصبح الإحساس بها صحيحًا.",
+    "lang": "English", "lang.label": "التبديل إلى الإنجليزية",
+    "sound": "الصوت:", "on": "يعمل", "off": "مغلق",
+    "hint.power": "مرّر لتشغيل الجهاز", "hint.keep": "واصل التمرير", "hint.in": "ندخل الآن",
+    "hint.hz": "مرّر لتمشي على الطريق", "hint.ignh": "مرّر لتمشي في الممر", "hint.shelf": "مرّر لتدوير الرف",
+    "featured": "مختارة", "howto": "طريقة اللعب", "play": "العب على itch.io", "padhint": "أو اضغط <kbd>A</kbd> على الجهاز",
+    "time": "الوقت",
+    "every": "كل الألعاب", "drag": "اسحب الرف، أو استخدم <kbd>←</kbd> <kbd>→</kbd>",
+    "contact.kicker": "////// تواصل", "contact.title": "لنصنع شيئًا<br>يستحق اللعب.",
+    "contact.sub": "استوديوهات، فرق تطوير، متعاونون: بريدي مفتوح دائمًا.", "copy": "انسخ", "copied": "تم النسخ",
+    "twitter": "X / تويتر", "foot": "© 2026 عمر العبدان",
+    "narr.1": "امشِ في الممر.", "narr.2": "انقر على ما تجده.", "narr.3": "...قيد العمل."
   }
 };
 
-/* Per-game Arabic copy. English lives in js/data.js. */
-window.GAMES_AR = {
+/* Per-game Arabic copy (V3's GAMES_AR, plus the two itch pages without a description). */
+const GAMES_AR = {
   "memory": { tagline: "كلمة جديدة، أم رأيتها من قبل؟" },
   "many-doors-one-room": { tagline: "200 باب. واحد منها لك." },
   "csc113-experience": { tagline: "حاول النجاة من فصل دراسي في جامعة الملك سعود." },
@@ -76,18 +55,53 @@ window.GAMES_AR = {
   "ai-race": { tagline: "تفوّق على حشد من عدّائي الذكاء الاصطناعي." },
   "galaxy-jump": { tagline: "استمتع برحلة في الفضاء!" },
   "the-mysterious-dimension": { tagline: "الوقت هو المفتاح." },
-  "hourzero": { tagline: "ثوانٍ قبل الاصطدام.", blurb: "لعبة تصويب سريعة وقريبة المدى في الدقائق الأخيرة قبل الاصطدام. كل إصابة تمنحك ثوانيَ إضافية، وكل إخفاق يسلبك منها. انزل طبقةً بعد طبقة قبل أن ينفد الوقت." },
+  "jabaldillah": { tagline: "منشورة على itch.io." },
+  "clockracer": { tagline: "قيد التطوير." },
+  "hourzero": { tagline: "ثوانٍ قبل الاصطدام.", blurb: "لعبة تصويب سريعة وقريبة المدى في الدقائق الأخيرة قبل الاصطدام. كل إصابة تمنحك ثوانيَ إضافية، وكل إخفاق يسلبك منها." },
   "insert-game-name-here": { tagline: "قيد العمل.", blurb: "لعبة من منظور الشخص الأول تعمل في المتصفح. تجوّل في الممر وتفاعل مع ما تجده." },
   "ticking-grains": { tagline: "أنت المؤقّت. أبقِ نفسك تعمل.", blurb: "لعبة منصّات يقلبك فيها القفز رأسًا على عقب، والانقلاب هو الشيء الوحيد الذي يمنع رملك من النفاد." }
 };
 
-window.WORDS_AR = {
-  /* genres */
+const WORDS_AR = {
   "Shooter": "تصويب", "First-person": "منظور الشخص الأول", "Puzzle platformer": "ألغاز ومنصّات", "Word game": "لعبة كلمات",
   "Adventure": "مغامرة", "Simulation": "محاكاة", "Horror survival": "رعب ونجاة", "Strategy": "استراتيجية",
   "Co-op platformer": "منصّات تعاونية", "Racing": "سباق", "3D parkour": "باركور ثلاثي الأبعاد",
-  /* platforms and statuses */
-  "Browser": "المتصفح", "Windows": "ويندوز", "University project": "مشروع جامعي", "Prototype": "نموذج أولي", "Solo project": "مشروع فردي",
-  /* controls */
+  "Browser": "المتصفح", "Windows": "ويندوز",
   "Move": "تحرّك", "Fire": "أطلق", "Run": "اركض", "Jump": "اقفز", "Slide": "انزلق", "Interact": "تفاعل"
 };
+
+let lang = "ar";
+try { lang = localStorage.getItem("lang") || "ar"; } catch (e) {}
+if (lang !== "en" && lang !== "ar") lang = "ar";
+
+export const getLang = () => lang;
+export const isAr = () => lang === "ar";
+export function setLang(l) {
+  lang = l;
+  try { localStorage.setItem("lang", l); } catch (e) {}
+  applyDocLang();
+}
+export const t = key => (STR[lang] && STR[lang][key]) ?? STR.en[key] ?? key;
+export const word = w => (lang === "ar" && WORDS_AR[w]) || w;
+
+/* A game's display copy in the current language (titles stay English). */
+export function gameText(g) {
+  const ar = lang === "ar" ? GAMES_AR[g.slug] || {} : {};
+  return {
+    tagline: ar.tagline || g.tagline,
+    blurb: ar.blurb || g.blurb,
+    genre: g.genre ? word(g.genre) : "",
+    platform: g.platform ? word(g.platform) : "",
+    controls: (g.controls || []).map(([k, v]) => [k, word(v)])
+  };
+}
+
+export function applyDocLang() {
+  const el = document.documentElement;
+  el.lang = lang;
+  el.dir = lang === "ar" ? "rtl" : "ltr";
+  document.title = t("meta.title");
+  document.querySelectorAll("[data-i18n]").forEach(n => { n.textContent = t(n.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-html]").forEach(n => { n.innerHTML = t(n.dataset.i18nHtml); });
+  document.querySelectorAll("[data-i18n-aria]").forEach(n => { n.setAttribute("aria-label", t(n.dataset.i18nAria)); });
+}

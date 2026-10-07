@@ -1,172 +1,169 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" class="is-intro">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Omar Alabdan · Game Designer & Indie Developer</title>
-<meta name="description" content="Omar Alabdan (iCopsyle), game designer and indie developer. Featured games HourZero, Insert Game Name Here and Ticking Grains, plus every project on itch.io.">
-<meta name="theme-color" content="#0a0f17">
-<meta property="og:title" content="Omar Alabdan · Game Designer & Indie Developer">
-<meta property="og:image" content="assets/img/reel-hourzero.jpg">
+<title>عمر العبدان · مصمّم ألعاب</title>
+<meta name="description" content="Omar Alabdan (iCopsyle), game designer and indie developer. A Game Boy in the desert, with his games inside it.">
+<meta name="theme-color" content="#e7c39a">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%F0%9F%8E%AE%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="assets/img/reel-hourzero.jpg" fetchpriority="high">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400;500&family=Readex+Pro:wght@300..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Press+Start+2P&family=Readex+Pro:wght@300..700&family=Unbounded:wght@500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
 <script>
-  // Language before first paint: saved choice, else the browser's language.
+  // Language before first paint: the saved choice, otherwise Arabic.
   (function () {
-    var l = null;
-    try { l = localStorage.getItem("lang"); } catch (e) {}
-    if (!l) l = (navigator.language || "").toLowerCase().indexOf("ar") === 0 ? "ar" : "en";
+    var l = "ar";
+    try { l = localStorage.getItem("lang") || "ar"; } catch (e) {}
+    if (l !== "en") l = "ar";
     document.documentElement.lang = l;
     document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
-    try { if (sessionStorage.getItem("seen")) document.documentElement.classList.remove("is-intro"); } catch (e) {}
   })();
 </script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+} }
+</script>
 </head>
-<body>
-<!--
-THESIS: The category-standard game-dev portfolio (showreel hero, featured work, project index, contact), chosen by the user from four prototypes and executed at full fidelity: the work leads from the first frame, every section moves.
-OWN-WORLD: night-sky dark (#0a0f17 / #111a26) with calm sky blue (#8ecdf7) as the only accent; faint night clouds drift behind the whole page; the close is a cloud-filled night sky. Geist + Geist Mono for Latin, Readex Pro for Arabic; full RTL mirror.
-STORY: see Omar's games playing behind his name, compare three featured 2026 games in an expanding character-select row (hover scrubs screenshots), scan every other project, read who he is and a few facts, email him under drifting clouds.
-FIRST VIEWPORT: full-bleed WebGL reel of the featured games with a noise-dissolve transition; name at display size bottom-start, role, one line, "See featured games" primary; the current game's name and a Play button at bottom-end, no card.
-FORM: the category standard (canon exit), seed d8788521.
-FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
--->
-<a class="skip" href="#featured" data-i18n="skip">Skip to content</a>
+<body class="is-loading">
 
-<canvas class="sky" id="sky" aria-hidden="true"></canvas>
-<div class="wipe" id="wipe" aria-hidden="true"></div>
+<canvas id="gl" aria-hidden="true"></canvas>
 
-<!-- ============================== NAV ============================== -->
-<header class="nav" id="nav">
-  <a class="brand" href="#top" data-scroll-to aria-label="Omar Alabdan">
-    <span class="brand-emoji" aria-hidden="true">🎮</span>
-    <span class="brand-name" data-i18n="hero.name">Omar Alabdan</span>
-  </a>
-  <nav class="nav-links" aria-label="Sections">
-    <span class="nav-pill" id="navPill" aria-hidden="true"></span>
-    <a href="#featured" data-scroll-to data-i18n="nav.work">Featured</a>
-    <a href="#projects" data-scroll-to data-i18n="nav.projects">Projects</a>
-    <a href="#about" data-scroll-to data-i18n="nav.about">About</a>
-    <a href="#contact" data-scroll-to data-i18n="nav.contact">Contact</a>
+<!-- ============================ LOADER ============================ -->
+<div class="loader" id="loader" aria-live="polite">
+  <div class="loader-inner">
+    <p class="loader-logo" data-i18n="name">عمر العبدان</p>
+    <p class="loader-line"><span data-i18n="loading">// جارٍ تحميل الصحراء</span><b id="loadPct">000%</b></p>
+    <div class="loader-bar"><i id="loadBar"></i></div>
+    <p class="loader-help" id="loaderHelp" hidden></p>
+  </div>
+</div>
+<script>
+  // If the site can't start, say why instead of sitting at 000%.
+  (function () {
+    var ar = document.documentElement.lang === "ar";
+    function help(en, arText) {
+      var el = document.getElementById("loaderHelp");
+      el.innerHTML = ar ? arText : en; el.hidden = false;
+    }
+    if (location.protocol === "file:") {
+      help("This site can't run from a double-clicked file. Open <b>Start Website.cmd</b> in the same folder instead (or upload the folder to a web host).",
+           "لا يعمل الموقع عند فتح الملف مباشرة. افتح <b>Start Website.cmd</b> من نفس المجلد بدلًا من ذلك (أو ارفع المجلد إلى استضافة).");
+      return;
+    }
+    // main.js sets window.__siteStarted as soon as it runs; if it never does, the scripts didn't load
+    setTimeout(function () {
+      if (!window.__siteStarted) help("The 3D engine didn't load. Check your internet connection (it comes from cdn.jsdelivr.net) and reload.",
+                                       "لم يتم تحميل محرك ثلاثي الأبعاد. تحقق من اتصالك بالإنترنت (يأتي من cdn.jsdelivr.net) ثم أعد التحميل.");
+    }, 12000);
+  })();
+</script>
+
+<!-- ============================ HUD =============================== -->
+<header class="hud">
+  <div class="corner tl">
+    <a class="logo" href="#" data-go="0" data-i18n-aria="name" aria-label="عمر العبدان">
+      <span class="logo-a" data-i18n="name.a">عمر</span><span class="logo-b" data-i18n="name.b">العبدان</span>
+    </a>
+    <p class="mono dim" data-i18n="role">// مصمّم ومطوّر ألعاب مستقل</p>
+    <p class="mono dim tl-sub" data-i18n-html="sub">iCopsyle.<br>أكثر من ست سنوات. أربع عشرة لعبة.</p>
+  </div>
+
+  <nav class="corner tr" aria-label="Sections">
+    <p class="mono slashes" data-i18n="index">////// الفهرس</p>
+    <ul class="nav">
+      <li><a href="#games" data-go="games" data-i18n="nav.games">الألعاب</a></li>
+      <li><a href="#projects" data-go="library" data-i18n="nav.all">كل المشاريع</a></li>
+      <li><a href="#contact" data-go="contact" data-i18n="nav.contact">تواصل</a></li>
+    </ul>
+    <button class="lang" type="button" id="langBtn" data-i18n="lang" data-i18n-aria="lang.label" aria-label="التبديل إلى الإنجليزية">English</button>
+    <p class="mono manifesto" id="manifesto" data-i18n="manifesto"></p>
   </nav>
-  <button class="lang" type="button" id="langBtn" data-i18n="nav.lang" data-i18n-aria="nav.langLabel" aria-label="Switch to Arabic">العربية</button>
+
+  <div class="corner bl">
+    <button class="sound mono" id="soundBtn" type="button" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path class="spk" d="M4 9h4l5-4v14l-5-4H4z"/><path class="off" d="M16 9l5 6M21 9l-5 6"/><path class="on" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg>
+      <span><span data-i18n="sound">الصوت:</span> <b id="soundState">مغلق</b></span>
+    </button>
+  </div>
+
+  <div class="corner br">
+    <p class="mono hint" id="hint"><span id="hintText"></span><i></i></p>
+  </div>
 </header>
 
-<main>
-<!-- ============================== HERO ============================= -->
-<section class="hero" id="top">
-  <div class="reel" id="reel">
-    <div class="reel-frames" id="reelFrames">
-      <img src="assets/img/reel-hourzero.jpg" alt="" width="1920" height="1080" fetchpriority="high" decoding="async" class="is-on">
-      <img src="assets/img/reel-insert-game-name-here.jpg" alt="" width="1920" height="1080" decoding="async">
-      <img src="assets/img/reel-ticking-grains.jpg" alt="" width="1920" height="1080" decoding="async">
-    </div>
-    <canvas id="reelGL" aria-hidden="true"></canvas>
-    <div class="reel-shade"></div>
+<!-- ======================= CHAPTER PANELS ========================= -->
+<section class="panel panel-game" id="gamePanel" aria-live="polite">
+  <div class="side side-l">
+    <p class="mono kicker"><span id="gIdx">01</span> <span class="dim" id="gOf"></span></p>
+    <h2 class="g-title" id="gTitle" dir="ltr">HourZero</h2>
+    <p class="mono g-meta" id="gMeta"></p>
+    <p class="g-tag" id="gTag"></p>
+    <p class="g-blurb" id="gBlurb"></p>
   </div>
-
-  <div class="hero-copy">
-    <p class="role" data-i18n="hero.role">Game designer &amp; indie developer</p>
-    <h1 class="hero-name" data-split data-i18n="hero.name">Omar Alabdan</h1>
-    <p class="hero-line" data-i18n="hero.line">Six-plus years designing and building games. Mechanics first, polished until they feel right, and actually shipped.</p>
-    <div class="hero-cta">
-      <a class="btn btn-sky" href="#featured" data-scroll-to data-magnetic>
-        <span data-i18n="hero.cta">See featured games</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
-      </a>
-      <a class="btn btn-line" href="#contact" data-scroll-to data-magnetic><span data-i18n="hero.cta2">Get in touch</span></a>
-    </div>
-  </div>
-
-  <div class="now" id="now">
-    <span class="now-title-wrap"><span class="now-title" id="nowTitle">HourZero</span></span>
-    <a class="now-play" id="nowPlay" href="https://icopsyle.itch.io/hourzero" target="_blank" rel="noopener">
-      <span data-i18n="hero.play">Play</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+  <div class="side side-r">
+    <p class="mono kicker dim" data-i18n="howto">طريقة اللعب</p>
+    <ul class="keys" id="gKeys"></ul>
+    <a class="play" id="gPlay" href="#" target="_blank" rel="noopener">
+      <span data-i18n="play">العب على itch.io</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
     </a>
+    <p class="mono dim pad-hint" data-i18n-html="padhint"></p>
   </div>
-
-  <a class="scroll-cue" href="#featured" data-scroll-to aria-hidden="true" tabindex="-1"><span data-i18n="hero.scroll">Scroll</span><i></i></a>
 </section>
 
-<!-- ============================ FEATURED =========================== -->
-<section class="featured" id="featured">
-  <header class="sec-head wrap">
-    <h2 data-split data-i18n="feat.title">Three games from 2026</h2>
-    <p data-i18n="feat.sub">My most recent games, all playable in your browser.</p>
-  </header>
-  <div class="select" id="select"></div>
-</section>
+<!-- HourZero's clock, counting down as you walk -->
+<div class="hz-timer" id="hzTimer" aria-hidden="true"><span data-i18n="time">الوقت</span><b id="hzTime">15</b></div>
 
-<!-- ============================ PROJECTS =========================== -->
-<section class="projects" id="projects">
-  <div class="wrap">
-    <header class="proj-head">
-      <div>
-        <h2 data-split data-i18n="proj.title">All projects</h2>
-        <p data-i18n="proj.sub">Everything else I've made, from 2020 to now. Every one is playable on itch.io.</p>
-      </div>
-      <p class="proj-count"><b id="cAll"></b> <span data-i18n="proj.count">games</span></p>
-    </header>
-    <ul class="proj-list" id="projList"></ul>
+<!-- Insert Game Name Here's narrator -->
+<p class="narr" id="narr" aria-live="polite"></p>
+
+<section class="panel panel-lib" id="libPanel">
+  <div class="side side-l">
+    <p class="mono kicker dim"><span data-i18n="every">كل الألعاب</span> · <span id="libCount" dir="ltr"></span></p>
+    <h2 class="g-title" id="libTitle" dir="ltr"></h2>
+    <p class="mono g-meta" id="libMeta"></p>
+    <p class="g-tag" id="libTag"></p>
+    <a class="play" id="libPlay" href="#" target="_blank" rel="noopener">
+      <span data-i18n="play">العب على itch.io</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+    </a>
+    <p class="mono dim pad-hint" data-i18n-html="drag"></p>
   </div>
-  <div class="proj-preview" id="projPreview" aria-hidden="true"><div class="pp-inner" id="ppInner"></div></div>
+  <div class="side side-r">
+    <ol class="lib" id="libList"></ol>
+  </div>
 </section>
 
-<!-- ============================= ABOUT ============================= -->
-<section class="about" id="about">
-  <div class="wrap">
-    <h2 class="about-title" data-split data-i18n="about.title">About</h2>
-    <p class="statement" id="statement" data-i18n="about.statement">I'm Omar, a game designer and indie developer. I care about three things: mechanics that feel good in your hands, polish that makes a small game feel finished, and actually shipping it.</p>
-    <div class="about-grid">
-      <div class="about-copy">
-        <p data-i18n="about.p1"></p>
-        <p data-i18n="about.p2"></p>
-      </div>
-      <dl class="facts">
-        <div><dt data-i18n="about.facts.years">Experience</dt><dd data-i18n="about.facts.yearsV">6+ years</dd></div>
-        <div><dt data-i18n="about.facts.games">Released</dt><dd data-i18n="about.facts.gamesV">14 games on itch.io</dd></div>
-        <div><dt data-i18n="about.facts.engine">Works in</dt><dd data-i18n="about.facts.engineV">2D &amp; 3D</dd></div>
-        <div><dt data-i18n="about.facts.handle">Handle</dt><dd data-i18n="about.facts.handleV">iCopsyle</dd></div>
-      </dl>
+<section class="panel panel-contact" id="contactPanel">
+  <div class="contact">
+    <p class="mono kicker dim" data-i18n="contact.kicker">////// تواصل</p>
+    <h2 class="c-title" data-i18n-html="contact.title">لنصنع شيئًا<br>يستحق اللعب.</h2>
+    <p class="c-sub" data-i18n="contact.sub"></p>
+    <div class="c-row">
+      <a class="mail" href="mailto:omar.abdan800@gmail.com" dir="ltr">omar.abdan800@gmail.com</a>
+      <button class="copy mono" id="copyBtn" type="button" data-i18n="copy">انسخ</button>
     </div>
-
-  </div>
-</section>
-
-<!-- ============================ CONTACT ============================ -->
-<section class="contact" id="contact">
-  <canvas class="clouds" id="clouds" aria-hidden="true"></canvas>
-  <div class="wrap contact-inner">
-    <h2 class="contact-title" data-split data-i18n="contact.title">Let's make something worth playing.</h2>
-    <p class="contact-sub" data-i18n="contact.sub">Studios, teams, collaborators: my inbox is open.</p>
-    <div class="mail-row">
-      <a class="mail" href="mailto:omar.abdan800@gmail.com" data-magnetic dir="ltr">omar.abdan800@gmail.com</a>
-      <button class="btn btn-line" type="button" id="copyMail" data-magnetic>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
-        <span data-i18n="contact.copy">Copy email</span>
-      </button>
-    </div>
-    <ul class="links">
-      <li><a href="https://icopsyle.itch.io/" target="_blank" rel="noopener"><span>itch.io</span><em dir="ltr">icopsyle.itch.io</em><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
-      <li><a href="https://twitter.com/iCopsyle" target="_blank" rel="noopener"><span>X / Twitter</span><em dir="ltr">@iCopsyle</em><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+    <ul class="c-links mono">
+      <li><a href="https://icopsyle.itch.io/" target="_blank" rel="noopener">itch.io ↗</a></li>
+      <li><a href="https://twitter.com/iCopsyle" target="_blank" rel="noopener"><span data-i18n="twitter">X / تويتر</span> ↗</a></li>
     </ul>
   </div>
-  <footer class="foot wrap">
-    <span data-i18n="foot.rights">© 2026 Omar Alabdan</span>
-    <span class="foot-time"><span data-i18n="foot.time">Your time</span> <b id="footTime" dir="ltr">--:--</b></span>
-    <a href="#top" data-scroll-to class="to-top"><span data-i18n="foot.top">Back to top</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></a>
-  </footer>
+  <p class="mono dim foot" data-i18n="foot">© 2026 عمر العبدان</p>
 </section>
+
+<!-- Scroll track: the page height is what drives the camera. -->
+<main class="track" id="track">
+  <span class="anchor" id="games"></span>
+  <span class="anchor" id="projects"></span>
+  <span class="anchor" id="contact"></span>
 </main>
 
-<script src="js/data.js"></script>
-<script src="js/i18n.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
-<script src="js/reel.js" defer></script>
-<script src="js/site.js" defer></script>
+<noscript><p class="noscript">This portfolio needs JavaScript and WebGL. Find every game at <a href="https://icopsyle.itch.io/">icopsyle.itch.io</a>.</p></noscript>
+
+<script type="module" src="js/main.js"></script>
 </body>
 </html>
